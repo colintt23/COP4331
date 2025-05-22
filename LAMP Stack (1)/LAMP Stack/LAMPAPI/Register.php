@@ -37,7 +37,7 @@ $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
       $id = $conn->insert_id;
 		  $stmt->close();
 		  $conn->close();
-      returnWithInfo('{"id": "' . $id . '"}');
+      returnWithInfo("User added");
 	  }
     else
       //row > 0, username already in database
