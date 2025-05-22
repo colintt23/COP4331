@@ -1,8 +1,7 @@
-
 <?php
 
 	$inData = getRequestInfo();
-	
+
 	$id = 0;
 	$firstName = "";
 	$lastName = "";
@@ -21,14 +20,8 @@
 
 		if( $row = $result->fetch_assoc()  )
 		{
-			if (password_verify($inData["password"], $row["Password"]))
-			{
-           			returnWithInfo($row['firstName'], $row['lastName'], $row['ID']);
-        		}
-			else 
-			{
-          			returnWithError("Invalid password");
-     			}
+			returnWithInfo($row['firstName'], $row['lastName'], $row['ID']);
+
 		}
 		else
 		{
@@ -38,7 +31,7 @@
 		$stmt->close();
 		$conn->close();
 	}
-	
+
 	function getRequestInfo()
 	{
 		return json_decode(file_get_contents('php://input'), true);
@@ -49,17 +42,17 @@
 		header('Content-type: application/json');
 		echo $obj;
 	}
-	
+
 	function returnWithError( $err )
 	{
 		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
-	
+
 	function returnWithInfo( $firstName, $lastName, $id )
 	{
 		$retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
-	
+
 ?>
