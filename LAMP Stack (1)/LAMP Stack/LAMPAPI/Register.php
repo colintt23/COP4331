@@ -2,10 +2,10 @@
 
   $inData = getRequestInfo();
   //similar to AddContacts.php
-	$firstName = $inData["FirstName"];
-  $lastName = $inData["LastName"];
-  $userName = $inData["Login"];
-  $password = $inData["Password"];
+	$firstName = $inData["firstName"];
+  $lastName = $inData["lastName"];
+  $userName = $inData["login"];
+  $password = $inData["password"];
 
 
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
@@ -29,10 +29,9 @@ $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
     // does not currently exist, can add it to the table
     if($rows == 0)
     {
-    $hashPW = password_hash($password, PASSWORD_DEFAULT); // has password for security
       // Similar to AddContacts file
       $stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?, ?, ?, ?)");
-      $stmt->bind_param("ssss",$firstName, $lastName, $userName, $hashPW);
+      $stmt->bind_param("ssss",$firstName, $lastName, $userName, $password);
 		  $stmt->execute();
       // insert ID for the new user from auto increment of database table,
       $id = $conn->insert_id;
