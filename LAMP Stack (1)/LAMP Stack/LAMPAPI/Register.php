@@ -2,10 +2,10 @@
 
   $inData = getRequestInfo();
   //similar to AddContacts.php
-	$firstName = $inData["firstName"];
-  $lastName = $inData["lastName"];
-  $userName = $inData["login"];
-  $password = $inData["password"];
+	$firstName = $inData["FirstName"];
+  $lastName = $inData["LastName"];
+  $userName = $inData["Login"];
+  $password = $inData["Password"];
 
 
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
