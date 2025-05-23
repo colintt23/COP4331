@@ -1,0 +1,210 @@
+swagger: '2.0'
+info:
+  description: API Documentation for COP4331 Web App
+  version: 1.0.0
+  title: Magistic Contacter
+  contact:
+    email: co459798@ucf.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /addContact:
+    post:
+      summary: Add a new contact
+      parameters:
+        - in: body
+          name: contact
+          required: true
+          schema:
+            $ref: '#/definitions/ContactInput'
+      responses:
+        '200':
+          description: Success or error message
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /deleteContact:
+    delete:
+      summary: Delete a contact
+      description: Deletes a contact based on (FirstName + LastName) OR Phone OR Email, matched with userId.
+      parameters:
+        - in: body
+          name: contactDelete
+          required: true
+          schema:
+            $ref: '#/definitions/ContactDeleteInput'
+      responses:
+        '200':
+          description: Success or error message
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /login:
+    post:
+      summary: User login
+      description: Authenticates a user and returns user information.
+      parameters:
+        - in: body
+          name: loginRequest
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
+      responses:
+        '200':
+          description: User info or error message
+          schema:
+            $ref: '#/definitions/LoginResponse'
+  /register:
+    post:
+      summary: Register a new user
+      description: Creates a new user if the login (username) is not already taken.
+      parameters:
+        - in: body
+          name: registerRequest
+          required: true
+          schema:
+            $ref: '#/definitions/RegisterRequest'
+      responses:
+        '200':
+          description: Success or error message
+          schema:
+            $ref: '#/definitions/RegisterResponse'
+  /searchContacts:
+    post:
+      summary: Search user's contacts
+      description: Searches contacts by name, phone, or email for a given user.
+      parameters:
+        - in: body
+          name: searchRequest
+          required: true
+          schema:
+            $ref: '#/definitions/ContactSearchRequest'
+      responses:
+        '200':
+          description: Matching contacts or error message
+          schema:
+            $ref: '#/definitions/ContactSearchResponse'
+definitions:
+  ContactInput:
+    type: object
+    required:
+      - FirstName
+      - LastName
+      - Phone
+      - Email
+      - userId
+    properties:
+      FirstName:
+        type: string
+      LastName:
+        type: string
+      Phone:
+        type: string
+      Email:
+        type: string
+      userId:
+        type: string
+  ErrorResponse:
+    type: object
+    properties:
+      error:
+        type: string
+        description: Empty string if successful; error message otherwise
+  ContactDeleteInput:
+    type: object
+    required:
+      - userId
+    properties:
+      FirstName:
+        type: string
+      LastName:
+        type: string
+      Phone:
+        type: string
+      Email:
+        type: string
+      userId:
+        type: string
+  LoginRequest:
+    type: object
+    required:
+      - login
+      - password
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+  LoginResponse:
+    type: object
+    properties:
+      id:
+        type: integer
+      firstName:
+        type: string
+      lastName:
+        type: string
+      error:
+        type: string
+        description: Error message (if any). Empty string if successful.
+  RegisterRequest:
+    type: object
+    required:
+      - firstName
+      - lastName
+      - login
+      - password
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      login:
+        type: string
+      password:
+        type: string
+  RegisterResponse:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          type: string
+      error:
+        type: string
+        description: Error message if any; empty string on success
+  ContactSearchRequest:
+    type: object
+    required:
+      - search
+      - userId
+    properties:
+      search:
+        type: string
+      userId:
+        type: integer
+  ContactSearchResponse:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/Contact'
+      error:
+        type: string
+        description: Empty if successful; otherwise contains an error message
+  Contact:
+    type: object
+    properties:
+      FirstName:
+        type: string
+      LastName:
+        type: string
+      Phone:
+        type: string
+      Email:
+        type: string
+
+host: cop4331summer2025.xyz
+basePath: /LAMPAPI
+schemes:
+  - http
