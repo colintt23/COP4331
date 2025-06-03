@@ -1,6 +1,12 @@
 body 
 {
     background-color: #1e6363;
+    background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
 }
 
 #title 
@@ -10,16 +16,17 @@ body
     margin: 2% 5%;
     text-align: center;
     font-family: 'Ubuntu', sans-serif;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 #loginDiv
 {
     font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
+    width: 50%;
+    margin-left: 25%;
     padding: 25px;
-    background-color: #b2b2b2;
+    background-color: #f8e1acd5;
+    text-align: center;
 }
 
 #loggedInDiv
@@ -27,8 +34,20 @@ body
     font-size: 30px;
     width: 70%;
     margin-left: 15%;
+    padding: 20px;
+    background-color: #f8e1acd5;
+    text-align: center;
+    font-size: 30px;
+}
+
+#loginDivReg
+{
+    background-color: #f8e1acd5;
+    width: 40%;
+    margin-left: 30%;
     padding: 25px;
-    background-color: #b2b2b2;
+    text-align: left;
+
 }
 
 #accessUIDiv
@@ -38,6 +57,14 @@ body
     margin-left: 15%;
     padding: 25px;
     background-color: #b2b2b2;
+    text-align: center;
+}
+
+#labels
+{
+    display: inline-block;
+    font-size: 24px;
+    
 }
 
 .buttons
@@ -47,12 +74,19 @@ body
     width: 50%;
     margin-left: 25%;
     font-family: 'Ubuntu', sans-serif;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px;
+    transition: all 0.3s ease;
 }
 
 .buttons:hover{
-    background-color: #00d5124f;
+    background-color: #45a049;
     color: #FFFFFF;
-    opacity: 50%;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+    opacity: 60%;
 }
 
 #loginName
@@ -66,24 +100,37 @@ body
 #searchText
 {
 	font-size: 30px;
+	background-color: #e8f5e9;
+	border: 2px solid #4CAF50;
 }
 #colorText
 {
 	font-size: 30px;
 }
 
-input[type="text"],input[type="password"]{
+/* Green styling for all input fields */
+input[type="text"], input[type="password"], input[type="email"] {
     border-radius: 25px;
     text-align: center;
     width: 80%;
     margin-left: 10%;
     margin-bottom: 2%;
     font-family: 'Ubuntu', sans-serif;
+    background-color: #e8f5e9;
+    border: 2px solid #4CAF50;
+    padding: 10px;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    outline: none;
+    border-color: #2E7D32;
+    background-color: #f1f8e9;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
 #inner-title{
     display: inline-block;
-    font-size: 0.8em;
+    font-size: 25px;
     width: 90%;
     text-align: center;
     margin-left: 5%;
@@ -108,11 +155,19 @@ input[type="text"],input[type="password"]{
     width: 80%;
     margin-left: 10%;
     text-align: center;
+    font-weight: bold;
 }
 
 #logoutButton{
-    width: 20%;
-    margin-left: 40%;
+    width: 30%;
+    margin-left: 35%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+#logoutButton:hover{
+    background-color: #45a049;
 }
 
 select{
@@ -138,3 +193,227 @@ select{
     font-family: 'Ubuntu', sans-serif;
     color: #95060a;
 }
+
+/* Contact Manager Specific Styles */
+.contact-section {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.section-title {
+    color: #FFFFFF;
+    font-family: 'Ubuntu', sans-serif;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+}
+
+.contact-results {
+    margin-top: 20px;
+}
+
+.contact-item {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    margin: 10px auto;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Ubuntu', sans-serif;
+    max-width: 90%;
+}
+
+.contact-info {
+    flex-grow: 1;
+    color: #333;
+    text-align: left;
+}
+
+.contact-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #45a049;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #da190b;
+}
+
+/* Contact form inputs */
+#firstNameText, #lastNameText, #phoneText, #emailText {
+    width: 45%;
+    margin: 5px;
+    background-color: #e8f5e9;
+    border: 2px solid #4CAF50;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
+#firstNameText:focus, #lastNameText:focus, #phoneText:focus, #emailText:focus {
+    outline: none;
+    border-color: #2E7D32;
+    background-color: #f1f8e9;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+/* Result messages */
+#contactSearchResult, #contactAddResult {
+    display: block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin: 10px 5%;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+}
+
+/* Special styling for search contact button */
+#searchContactButton, #addContactButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    margin: 15px auto;
+    display: block;
+    width: 50%;
+}
+
+/* Code for Sidebar on contacts page */
+#rightSidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #2e8b57; /* Dark sea green */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.sidebar-button {
+    width: 100%;                     /* Full width of sidebar */
+    margin: 0;                       /* No external margin */
+    padding: 35px 0;                 /* More height */
+    font-size: 25px;
+    color: white;
+    background-color: #2e8b57;       /* Same as sidebar */
+    border: none;                    /* No border */
+    border-radius: 0;                /* No rounded corners */
+    cursor: pointer;
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-button:hover {
+    background-color: #3aa56a;       /* Slightly lighter green on hover */
+    color: #ffffff;
+}
+
+
+
+
+
+/* --- Glassmorphic main container --- */
+#accessUIDiv {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    color: white;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+/* --- Contact sections --- */
+.contact-section {
+    background-color: #f8e1acd5;
+    color: #333;
+    padding: 25px;
+    margin: 20px auto;
+    border-radius: 12px;
+    max-width: 800px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Modern button styles --- */
+.buttons {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+.buttons:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+/* --- Responsive layout tweaks --- */
+@media (max-width: 768px) {
+    #firstNameText, #lastNameText, #phoneText, #emailText {
+        width: 90%;
+        margin: 5px 0;
+    }
+
+    .buttons {
+        width: 90%;
+    }
+
+    #rightSidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px;
+    }
+
+    .sidebar-button {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
+
