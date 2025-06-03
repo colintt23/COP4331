@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome Explorer!</title>
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="js/code.js"></script>
+    <link href="css/styles.css" rel="stylesheet">	
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+</head>
+<body>
+
+<h1 id="title">Welcome Explorer!</h1>
+
+<div id="loginDivReg" style="width: 35%; text-align: center;">
+	<span id="inner-title" style="margin-bottom: 3%; font-size: 25px">Create an Account</span>
+	<span id="required" style="color: #95060a; margin-top: -90px;">Required Fields*</span><br>
+	<span id="labels">First Name*</span>
+	<input type="text" id="registerFirstName" class= "inputtext" style="font-size: 22px; width: 45%;" placeholder="First Name" /><br />
+	<span id="labels">Last Name*</span>
+	<input type="text" id="registerLastName" class= "inputtext" style="font-size: 22px; width: 45%;" placeholder="Last Name" /><br />
+	<span id="labels">Username*</span>
+	<input type="text" id="registerUsername" class= "inputtext" style="font-size: 22px; width: 45%;" placeholder="Username" /><br />
+	<span id="labels">Password*</span>
+	<input type="password" id="registerPassword" class= "inputtext" style="font-size: 22px; width: 45%;" placeholder="Password"/><br />
+	<span id="labels" style="margin-left: -50px;">Confirm Password*</span>
+	<input type="password" id="confirmPassword" class= "inputtext" style="font-size: 22px; width: 45%; margin-left: 43px;" placeholder="Confirm Password"/><br />
+    <span id="registerResult"> </style></span><br><br>
+	<button type="button" id="registerButton" class="buttons" style="text-align: center; margin-left: -16px;" onclick="doRegister();"> Create Account </button>
+	
+</div>
+
+<div id="loginLinkDiv" style="text-align: center; margin-top: -10px;">
+	<span style="color: #FFFFFF; font-family: 'Ubuntu', sans-serif; font-size: 23px;">Already have an account? </span>
+	<button type="button" id="loginLinkButton" class="buttons" onclick="goToLogin();" 
+	style="width: 8%; font-size: 18px; margin-left: -25px; background-color: transparent; color: rgb(255, 255, 255); border: none; ">Login Here</button>
+</div>
+
+<script type="text/javascript">
+
+
+//New Code for Register
+
+const API_BASE = 'http://cop4331summer2025.xyz/LAMPAPI';
+
+function doRegister() {
+    const firstName = document.getElementById('registerFirstName').value;
+    const lastName = document.getElementById('registerLastName').value;
+    const username = document.getElementById('registerUsername').value;
+    const password = document.getElementById('registerPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    document.getElementById('registerResult').innerHTML = "";
+
+    // Validation - same as before
+    if(firstName === "" || lastName === "" || username === "" || password === "") {
+        document.getElementById('registerResult').innerHTML = "Please fill in all fields";
+        document.getElementById('registerResult').style.color = "#95060a";
+        return;
+    }
+
+    if(password !== confirmPassword) {
+        document.getElementById('registerResult').innerHTML = "Passwords do not match";
+        document.getElementById('registerResult').style.color = "#95060a";
+        return;
+    }
+
+    if(password.length < 6) {
+        document.getElementById('registerResult').innerHTML = "Password must be at least 6 characters long";
+        document.getElementById('registerResult').style.color = "#95060a";
+        return;
+    }
+
+    // Show "Creating account..." message
+    document.getElementById('registerResult').innerHTML = "Creating account...";
+    document.getElementById('registerResult').style.color = "#0066cc";
+    
+    const testData = {
+        firstName: firstName,
+        lastName: lastName,
+        login: username,
+        password: password
+    };
+    
+ 
+    fetch(API_BASE + '/Register.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(testData)
+    })
+    .then(response => response.text())
+    .then(data => {
+        try {
+            const json = JSON.parse(data);
+            if (json.error === "") {
+                document.getElementById('registerResult').innerHTML = "Account created successfully! Logging you in...";
+                document.getElementById('registerResult').style.color = "#008000";
+                
+                // Auto-login after successful registration
+                setTimeout(function() {
+                    autoLogin(username, password);
+                }, 1000);
+            } else {
+                document.getElementById('registerResult').innerHTML = json.error;
+                document.getElementById('registerResult').style.color = "#95060a";
+            }
+        } catch (e) {
+            document.getElementById('registerResult').innerHTML = "Registration failed - Invalid response";
+            document.getElementById('registerResult').style.color = "#95060a";
+        }
+    })
+    .catch(error => {
+        document.getElementById('registerResult').innerHTML = "Network error: " + error;
+        document.getElementById('registerResult').style.color = "#95060a";
+    });
+}
+
+function autoLogin(username, password) {
+    const loginData = {
+        login: username,
+        password: password
+    };
+    
+    fetch(API_BASE + '/Login.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData)
+    })
+    .then(response => response.text())
+    .then(data => {
+        try {
+            const json = JSON.parse(data);
+            if (json.id && json.id > 0) {
+                // Login successful - save user info and redirect
+                saveCookie(json.firstName, json.lastName, json.id);
+                window.location.href = "color.html";
+            } else {
+                document.getElementById('registerResult').innerHTML = "Registration successful but login failed. Please login manually.";
+                document.getElementById('registerResult').style.color = "#95060a";
+                setTimeout(function() {
+                    window.location.href = "index.html";
+                }, 2000);
+            }
+        } catch (e) {
+            document.getElementById('registerResult').innerHTML = "Registration successful but login failed. Please login manually.";
+            document.getElementById('registerResult').style.color = "#95060a";
+            setTimeout(function() {
+                window.location.href = "index.html";
+            }, 2000);
+        }
+    })
+    .catch(error => {
+        document.getElementById('registerResult').innerHTML = "Registration successful but login failed. Please login manually.";
+        document.getElementById('registerResult').style.color = "#95060a";
+        setTimeout(function() {
+            window.location.href = "index.html";
+        }, 2000);
+    });
+}
+
+function saveCookie(firstName, lastName, userId) {
+    let minutes = 20;
+    let date = new Date();
+    date.setTime(date.getTime()+(minutes*60*1000));	
+    document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+}
+
+function goToLogin() {
+    window.location.href = "index.html";
+}
+
+// Add Enter key support
+document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('keypress', function(e) {
+		if (e.key === 'Enter') {
+			doRegister();
+		}
+	});
+});
+</script>
+
+</body>
+</html>

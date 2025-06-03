@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>COP 4331 Personal Contact Manager</title>
+    <script type="text/javascript" src="js/contacts.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            readCookie();
+        }, false);
+    </script>
+</head>
+<body>
+
+    <h1 id="title">COP 4331 Personal Contact Manager</h1>
+
+    <div id="loggedInDiv">
+        <span id="userName"></span><br />
+    </div>
+
+    <div id="accessUIDiv">
+        <br />
+
+        <!-- Search Contacts Section -->
+        <div class="contact-section" style="background-color: #f8e1acd5;">
+            <h2 class="section-title" style="color: black;" >Search Contacts</h2>
+            <input type="text" id="searchText" placeholder="Search by name, phone, or email" />
+            <button type="button" id="searchContactButton" class="buttons" onclick="searchContact();">Search Contacts</button><br />
+            <span id="contactSearchResult"></span>
+            <div id="contactList"></div>
+        </div>
+
+        <br /><br />
+
+        <!-- Add Contact Section -->
+        <div class="contact-section" style="background-color: #f8e1acd5;">
+            <h2 class="section-title" style="color: black;" >Add New Contact</h2>
+            <input type="text" id="firstNameText" placeholder="First Name">
+            <input type="text" id="lastNameText" placeholder="Last Name"><br />
+            <input type="text" id="phoneText" placeholder="Phone Number">
+            <input type="email" id="emailText" placeholder="Email Address"><br />
+            <button type="button" id="addContactButton" class="buttons" onclick="addContact();">Add Contact</button><br />
+            <span id="contactAddResult"></span>
+        </div>
+
+        <br /><br />
+
+        <!-- Edit/Delete Contact Section -->
+        <div class="contact-section" style="background-color: #f8e1acd5;">
+            <h2 class="section-title" style="color: rgb(239, 41, 41);" >Edit/Delete Contact</h2>
+            <p>Search for a contact above, then click "Edit" or "Delete" next to their information.</p>
+        </div>
+    </div>
+
+    <!-- Side Bar section -->
+    <div id="rightSidebar">
+        <button class="sidebar-button" onclick="doLogout();">Log Out</button>
+        <button class="sidebar-button" onclick="goToContacts();">Search Contacts</button>
+    </div>
+
+</body>
+</html>
