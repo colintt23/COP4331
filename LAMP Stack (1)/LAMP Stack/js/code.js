@@ -1,4 +1,4 @@
-const urlBase = 'http://COP4331-5.com/LAMPAPI';
+const urlBase = 'http://cop4331summer2025.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -46,7 +46,7 @@ function doLogin()
 
 				saveCookie();
 	
-				window.location.href = "color.html";
+				window.location.href = "contacts.html";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -57,6 +57,88 @@ function doLogin()
 	}
 
 }
+
+function doRegister()
+{
+	let firstName = document.getElementById("registerFirstName").value;
+	let lastName = document.getElementById("registerLastName").value;
+	let username = document.getElementById("registerUsername").value;
+	let password = document.getElementById("registerPassword").value;
+	let confirmPassword = document.getElementById("confirmPassword").value;
+	
+	document.getElementById("registerResult").innerHTML = "";
+
+	// Validation
+	if(firstName === "" || lastName === "" || username === "" || password === "")
+	{
+		document.getElementById("registerResult").innerHTML = "Please fill in all fields";
+		return;
+	}
+
+	if(password !== confirmPassword)
+	{
+		document.getElementById("registerResult").innerHTML = "Passwords do not match";
+		return;
+	}
+
+	if(password.length < 6)
+	{
+		document.getElementById("registerResult").innerHTML = "Password must be at least 6 characters long";
+		return;
+	}
+
+	let tmp = {firstName:firstName, lastName:lastName, login:username, password:password};
+	let jsonPayload = JSON.stringify(tmp);
+	
+	let url = urlBase + '/LAMPAPI/Register.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				let jsonObject = JSON.parse(xhr.responseText);
+				
+				if(jsonObject.error === "")
+				{
+					document.getElementById("registerResult").innerHTML = "Account created successfully! Redirecting to login...";
+					document.getElementById("registerResult").style.color = "#008000";
+					
+					// Redirect to login page after 2 seconds
+					setTimeout(function() {
+						window.location.href = "index.html";
+					}, 2000);
+				}
+				else
+				{
+					document.getElementById("registerResult").innerHTML = jsonObject.error;
+					document.getElementById("registerResult").style.color = "#95060a";
+				}
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("registerResult").innerHTML = err.message;
+		document.getElementById("registerResult").style.color = "#95060a";
+	}
+
+}
+
+function goToRegister() {
+    window.location.href = "register.html";
+}
+
+function goToLogin() {
+    window.location.href = "index.html";
+}
+
 
 function saveCookie()
 {
@@ -98,6 +180,7 @@ function readCookie()
 		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
 	}
 }
+
 
 function doLogout()
 {
