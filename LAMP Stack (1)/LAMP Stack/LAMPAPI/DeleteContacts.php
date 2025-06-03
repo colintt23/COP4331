@@ -15,8 +15,7 @@
     }
     else
     {
-      // Can delete by ((First and Last) or phone# or email, AND user ID)
-      // might change needing userID depending on project requirements
+//Delete by first and last,or phone, or email, AND userID for all
         $stmt = $conn->prepare("DELETE FROM Contacts WHERE ((FirstName = ? AND LastName = ?) OR Phone = ? OR Email = ?) AND UserID = ?");
         $stmt->bind_param("ssssi", $firstName, $lastName, $phone, $email, $userId);
         $stmt->execute();
